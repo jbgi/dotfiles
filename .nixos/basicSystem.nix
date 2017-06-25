@@ -41,7 +41,6 @@
   # networking
   networking = {
     networkmanager.enable = true;
-    tcpcrypt.enable = true;
     firewall = {
       enable = true;
       allowPing = true;
