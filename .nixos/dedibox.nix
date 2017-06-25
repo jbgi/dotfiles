@@ -33,10 +33,6 @@
   networking = {
     hostName = "dedibox"; # Define your hostname.
     hostId = "b2a3ac99";
-    firewall = {
-      allowedTCPPorts = [  ];
-      allowedUDPPorts = [  ];
-    };
   };
 
   hardware = {
