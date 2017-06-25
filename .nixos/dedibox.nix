@@ -8,6 +8,14 @@
     ./users.nix
   ];
   
+  
+  # Use the GRUB 2 boot loader.
+  boot.loader.grub = {
+    enable = true;
+    version = 2;
+    device = "/dev/sda";
+  };
+  
   systemd.enableEmergencyMode = false;
   
   time.timeZone = "Europe/Paris";
@@ -27,9 +35,7 @@
     hostId = "b2a3ac99";
     firewall = {
       allowedTCPPorts = [  ];
-      allowedUDPPorts = [
-        22 # IPP - printer discovery
-      ];
+      allowedUDPPorts = [  ];
     };
   };
 
