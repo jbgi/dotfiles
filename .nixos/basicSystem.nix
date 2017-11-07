@@ -12,9 +12,10 @@
 
   environment.systemPackages = with pkgs;
        [ file htop hwdata iotop lsof lshw lsscsi nethogs pciutils psmisc which smartmontools xsettingsd usbutils bind inetutils powertop ]
+    ++ [ termite.terminfo rxvt_unicode.terminfo ]
     ++ [ nix-serve nix-prefetch-git nix-prefetch-hg nix-prefetch-svn nix-prefetch-scripts ]
     ++ [ wget curl ]
-    ++ [ vim emacs25-nox ]
+    ++ [ vim ]
     ++ [ gitAndTools.gitFull ]
     ++ [ mkpasswd yadm ];
 
