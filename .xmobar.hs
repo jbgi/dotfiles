@@ -6,6 +6,7 @@ Config {
     bgColor = "#000000",
     fgColor = "#ffffff",
     lowerOnStart = True,
+    allDesktops = False,
     commands = [
         Run Cpu ["-t","<total>:CPU <user>:U <system>:S <iowait>:IO","-L","30","-H","60","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC","-w","3"] 10,
         Run Memory ["-t","Mem: <usedratio>%","-H","8192","-L","4096","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10,

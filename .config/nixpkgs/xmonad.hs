@@ -47,7 +47,7 @@ import qualified XMonad.StackSet              as W
 import System.Environment (setEnv)
 
 
-myTerminal = "gnome-terminal"
+myTerminal = "@terminal@"
 myModMask = mod4Mask
 
 
@@ -67,7 +67,7 @@ xmobarTitleColor = "#FFB6B0"
 -- Color of current workspace in xmobar.
 xmobarCurrentWorkspaceColor = "#CEFFAC"
 
-myLayout = smartBorders $ maximize $ avoidStruts (
+myLayout = avoidStruts $ smartBorders $ maximize (
     autoMasterLayout Accordion |||
     tabs |||
     Tall 1 (3/100) (1/3) |||
@@ -104,10 +104,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
   , ((modm               , xK_g)    , goToSelected myGSConfig)
   , ((modm               , xK_d)    , spawn "emacsclient -c")
   , ((modm               , xK_b)    , spawn "@browser@")
-  , ((noModMask, xF86XK_MonBrightnessUp)    , spawn "xbacklight +1")
-  , ((noModMask, xF86XK_MonBrightnessDown)  , spawn "xbacklight -1")
-  , ((noModMask, xF86XK_AudioRaiseVolume) , spawn "amixer set 'Master' 1%+")
-  , ((noModMask, xF86XK_AudioLowerVolume) , spawn "amixer set 'Master' 1%-")
+  , ((noModMask, xF86XK_MonBrightnessUp)    , spawn "xbacklight +10")
+  , ((noModMask, xF86XK_MonBrightnessDown)  , spawn "xbacklight -10")
+  , ((noModMask, xF86XK_AudioRaiseVolume) , spawn "amixer set 'Master' 5%+")
+  , ((noModMask, xF86XK_AudioLowerVolume) , spawn "amixer set 'Master' 5%-")
   , ((noModMask, xF86XK_AudioMute) , spawn "amixer set 'Master' toggle")
   , ((modm               , xK_l), spawn "@lockCmd@")
   ]
@@ -132,6 +132,7 @@ configuration =
   
 tray = unwords [
   "trayer"
+  , "--monitor primary"
   , "--edge top"
   ,  "--align center"
   ,  "--expand true"
@@ -158,7 +159,7 @@ main = do
     , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
     , ppSep = "    "
     })
-  , borderWidth = 3
+  , borderWidth = 1
   -- , keys = \c -> bepoKeys c `M.union` keys defaults c 
   }
 

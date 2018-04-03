@@ -10,6 +10,14 @@ let
         hspkgs: with hspkgs; [ ]
     );
 
+  citrixReceiver = pkgs.citrix_receiver.overrideAttrs (oldAttrs: {
+    src = requireFile rec {
+      name = "linuxx64-13.9.1.6.tar.gz";
+      sha256 = "1g15b7fs8f5ryz38524x1qrjghmp78y0wyj426mfi1y2x1y1bad9";
+      message = "msg";
+    };
+    });
+
   args = {inherit pkgs config stdenv;} // myOptions;
 
 in
@@ -47,21 +55,23 @@ in
     ++ optional withPyCharm idea.pycharm-community
 
     ### development / cloud
-    ++ [ nixops ]
+    ++ [ nixops terraform ]
 
     ### development / git tools
     ++ (with gitAndTools;
-       [ git hub git-extras topGit # gitchangelog
-         git-crypt
+       [ hub git-extras topGit # gitchangelog
+         git-crypt git-lfs
        ])
     ++ [ mercurialFull travis ]
 
     # ### development
     ++ [ devHaskell cabal-install cabal2nix hlint haskellPackages.stylish-haskell haskellPackages.hasktags ]
+    ++ optionals withMongo [ mongodb mongodb-tools robo3t ]
     #++ [ sqlite sqlitebrowser ]
     ++ [ source-code-pro nwjs_0_12 ]
-
+    ++ optional withSlack slack 
     ++ optionals withAndroidDev [ androidsdk adb-sync adbfs-rootless ]
+    ++ optional withMysql mysql-workbench
 
     # ### finance
     ++ (with haskellPackages;
@@ -78,10 +88,10 @@ in
     ++ optionals isLinux [ iotop htop nethogs ]
 
     ### media
-    ++ [vlc mplayer mpv mtpfs]
+    ++ [vlc mplayer mpv mtpfs pavucontrol ]
 
     ### nix
-    ++ [ nix-repl ]
+    ++ [ nix-repl ] ++ optional withNix nix
 
     ### office / productivity
     ++ [ gimp xournal ]
@@ -91,8 +101,9 @@ in
     ++ optional  withLibreOffice libreoffice
     ++ optional  withPopfile     popfile
     ++ optionals withDigikam     [digikam5 fdupes perlPackages.ImageExifTool]
+    ++ optionals withRemoteWindows [ freerdp remmina rdesktop citrixReceiver ]
 
-    ### security
+    # security
     ++ [ gnupg gnutls pinentry keychain keepass keepassx2 keybase ]
     ++ optional  isLinux paperkey
 
@@ -116,12 +127,14 @@ in
          geoclue
          wine
          mono
+         tmux
        ]
     ++ optional isLinux aria
 
     ### web / network
     ++ [ weechat httpie jq nmap w3m ]
-    ++ optional withChromium chromium
+    ++ optional withChromium chromium 
+    ++ optional withChrome google-chrome
     ++ optionals withUrxvt   [ rxvt_unicode_with-plugins
                                urxvt_font_size
                                urxvt_perl
@@ -134,7 +147,7 @@ in
     ### X11, window management
     ++ [ screen tmux ]                     # terminal multiplexers
     ++ [ enlightenment.terminology ]       # terminals
-    ++ [ xclip xsel xdotool i3lock         # X management
+    ++ [ arandr autorandr xclip xsel xdotool i3lock         # X management
          gnome3.gnome_keyring gnome3.gsettings_desktop_schemas ]
     ++ [ feh rofi ]                        # X tools
     ++ (with xorg; [xev xbacklight xmodmap ])

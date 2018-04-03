@@ -4,11 +4,11 @@
 
   firefox = {
     enableGoogleTalkPlugin = true;
-    enableAdobeFlash = true;
+    enableAdobeFlash = false;
   };
 
   chromium = {
-    enablePepperFlash = true;
+    enablePepperFlash = false;
     enablePepperPDF = true;
     enableWideVine = false;
   };
